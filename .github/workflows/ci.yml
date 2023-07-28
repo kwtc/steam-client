@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     env:
-      SOLUTION: ./<Solution name>.sln
+      SOLUTION: ./Kwtc.Steam.Client.sln
     
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -21,9 +21,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-        
-    - name: Update nuget.config with token
-      run: dotnet nuget update source --source "https://nuget.pkg.github.com/kwtc/index.json" github --username kwtc --password "${{secrets.GITHUB_TOKEN}}" --store-password-in-clear-text
         
     - name: Restore dependencies
       run: dotnet restore $SOLUTION
