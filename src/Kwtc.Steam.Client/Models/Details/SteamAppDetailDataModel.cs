@@ -14,8 +14,11 @@ public class SteamAppDetailDataModel
     [JsonPropertyName("steam_appid")]
     public int? Id { get; set; }
 
+    /// <summary>
+    /// This is dynamic because it can be 0 or a string ¯\_(ツ)_/¯.
+    /// </summary>
     [JsonPropertyName("required_age")]
-    public int? RequiredAge { get; set; }
+    public dynamic? RequiredAge { get; set; }
 
     [JsonPropertyName("is_free")]
     public bool? IsFree { get; set; }
