@@ -105,10 +105,10 @@ public class SteamAppDetailDataModel
     public SteamAppPlatformModel? Platforms { get; set; }
 
     [JsonPropertyName("categories")]
-    public IEnumerable<SteamAppIdDescriptionModel>? Categories { get; set; }
+    public IEnumerable<SteamAppIdIntDescriptionModel>? Categories { get; set; }
 
     [JsonPropertyName("genres")]
-    public IEnumerable<SteamAppIdDescriptionModel>? Genres { get; set; }
+    public IEnumerable<SteamAppIdStringDescriptionModel>? Genres { get; set; }
 
     [JsonPropertyName("screenshots")]
     public IEnumerable<SteamAppScreenshotModel>? Screenshots { get; set; }
