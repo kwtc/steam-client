@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Kwtc.Steam.Client.Models.Details;
 
-public class SteamAppIdDescriptionModel
+public class SteamAppDemoDescriptionModel
 {
-    [JsonPropertyName("id")]
+    [JsonPropertyName("appid")]
     public int? Id { get; set; }
     
     [JsonPropertyName("description")]
