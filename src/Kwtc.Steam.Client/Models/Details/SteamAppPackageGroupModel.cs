@@ -24,7 +24,7 @@ public class SteamAppPackageGroupModel
     public int? DisplayType { get; set; }
     
     [JsonPropertyName("is_recurring_subscription")]
-    public bool? IsRecurringSubscription { get; set; }
+    public string? IsRecurringSubscription { get; set; }
     
     [JsonPropertyName("subs")]
     public IEnumerable<SteamAppGroupSubscriptionModel>? Subscriptions { get; set; }
