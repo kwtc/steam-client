@@ -16,14 +16,10 @@ public class SteamClient : ISteamClient
 
     public async Task<SteamAppDetailRootModel?> GetAppDetailsAsync(string id, CancellationToken cancellationToken)
     {
-        // TODO: Split casting out to make debugging easier
         var result = await StoreUrl
                            .AppendPathSegments("api", "appdetails")
-                           .SetQueryParams(new
-                           {
-                               appids = id
-                           }).GetJsonAsync<Dictionary<string, SteamAppDetailRootModel>>(
-                               cancellationToken);
+                           .SetQueryParams(new { appids = id })
+                           .GetJsonAsync<Dictionary<string, SteamAppDetailRootModel>>(cancellationToken);
 
         if (result == null)
         {
@@ -35,25 +31,27 @@ public class SteamClient : ISteamClient
             : appDetails;
     }
 
+    public async Task<string?> GetAppDetailsJsonAsync(string id, CancellationToken cancellationToken = default)
+    {
+        return await StoreUrl
+                     .AppendPathSegments("api", "appdetails")
+                     .SetQueryParams(new { appids = id })
+                     .GetStringAsync(cancellationToken);
+    }
+
     public async Task<SteamAppListRootModel?> GetAppListAsync(CancellationToken cancellationToken)
     {
         return await ApiUrl
                      .AppendPathSegments("ISteamApps", "GetAppList", "v0002")
-                     .SetQueryParams(new
-                     {
-                         key = SteamKey,
-                         format = "json"
-                     }).GetJsonAsync<SteamAppListRootModel>(cancellationToken);
+                     .SetQueryParams(new { key = SteamKey, format = "json" })
+                     .GetJsonAsync<SteamAppListRootModel>(cancellationToken);
     }
 
     public async Task<string?> GetAppListJsonAsync(CancellationToken cancellationToken)
     {
         return await ApiUrl
                      .AppendPathSegments("ISteamApps", "GetAppList", "v0002")
-                     .SetQueryParams(new
-                     {
-                         key = SteamKey,
-                         format = "json"
-                     }).GetStringAsync(cancellationToken);
+                     .SetQueryParams(new { key = SteamKey, format = "json" })
+                     .GetStringAsync(cancellationToken);
     }
 }
