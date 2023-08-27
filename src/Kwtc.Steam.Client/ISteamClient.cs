@@ -8,6 +8,8 @@ namespace Kwtc.Steam.Client;
 public interface ISteamClient
 {
     Task<SteamAppDetailRootModel?> GetAppDetailsAsync(string id, CancellationToken cancellationToken = default);
+    
+    Task<string?> GetAppDetailsJsonAsync(string id, CancellationToken cancellationToken = default);
 
     Task<SteamAppListRootModel?> GetAppListAsync(CancellationToken cancellationToken = default);
 
