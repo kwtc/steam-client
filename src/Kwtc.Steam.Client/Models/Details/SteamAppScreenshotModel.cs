@@ -5,6 +5,7 @@ namespace Kwtc.Steam.Client.Models.Details;
 public class SteamAppScreenshotModel
 {
     [JsonPropertyName("id")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? Id { get; set; }
     
     [JsonPropertyName("path_thumbnail")]

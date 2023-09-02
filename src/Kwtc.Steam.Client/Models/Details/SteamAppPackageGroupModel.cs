@@ -21,6 +21,7 @@ public class SteamAppPackageGroupModel
     public string? SaveText { get; set; }
     
     [JsonPropertyName("display_type")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? DisplayType { get; set; }
     
     [JsonPropertyName("is_recurring_subscription")]

@@ -12,13 +12,12 @@ public class SteamAppDetailDataModel
     public string? Name { get; set; }
 
     [JsonPropertyName("steam_appid")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? Id { get; set; }
 
-    /// <summary>
-    /// This is dynamic because it can be 0 or a string ¯\_(ツ)_/¯.
-    /// </summary>
     [JsonPropertyName("required_age")]
-    public dynamic? RequiredAge { get; set; }
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    public int? RequiredAge { get; set; }
 
     [JsonPropertyName("is_free")]
     public bool? IsFree { get; set; }
@@ -27,6 +26,7 @@ public class SteamAppDetailDataModel
     public string? ControllerSupport { get; set; }
     
     [JsonPropertyName("dlc")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public IEnumerable<int>? Dlc { get; set; }
     
     [JsonPropertyName("detailed_description")]
@@ -99,6 +99,7 @@ public class SteamAppDetailDataModel
     public SteamAppPriceOverviewModel? PriceOverview { get; set; }
 
     [JsonPropertyName("packages")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public IEnumerable<int>? Packages { get; set; }
 
     [JsonPropertyName("package_groups")]
@@ -108,10 +109,10 @@ public class SteamAppDetailDataModel
     public SteamAppPlatformModel? Platforms { get; set; }
 
     [JsonPropertyName("categories")]
-    public IEnumerable<SteamAppIdIntDescriptionModel>? Categories { get; set; }
+    public IEnumerable<SteamAppDescriptionModel>? Categories { get; set; }
 
     [JsonPropertyName("genres")]
-    public IEnumerable<SteamAppIdStringDescriptionModel>? Genres { get; set; }
+    public IEnumerable<SteamAppDescriptionModel>? Genres { get; set; }
 
     [JsonPropertyName("screenshots")]
     public IEnumerable<SteamAppScreenshotModel>? Screenshots { get; set; }
