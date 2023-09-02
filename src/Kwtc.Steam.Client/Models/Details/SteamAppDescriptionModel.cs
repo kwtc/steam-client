@@ -2,10 +2,11 @@
 
 namespace Kwtc.Steam.Client.Models.Details;
 
-public class SteamAppIdStringDescriptionModel
+public class SteamAppDescriptionModel
 {
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+    public int? Id { get; set; }
     
     [JsonPropertyName("description")]
     public string? Description { get; set; }

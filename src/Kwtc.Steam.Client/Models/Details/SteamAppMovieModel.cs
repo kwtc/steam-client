@@ -5,6 +5,7 @@ namespace Kwtc.Steam.Client.Models.Details;
 public class SteamAppMovieModel
 {
     [JsonPropertyName("id")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? Id { get; set; }
     
     [JsonPropertyName("name")]

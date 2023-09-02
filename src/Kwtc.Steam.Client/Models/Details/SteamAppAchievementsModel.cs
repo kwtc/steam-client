@@ -6,6 +6,7 @@ namespace Kwtc.Steam.Client.Models.Details;
 public class SteamAppAchievementsModel
 {
     [JsonPropertyName("total")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? Total { get; set; }
     
     [JsonPropertyName("highlighted")]

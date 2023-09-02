@@ -8,12 +8,15 @@ public class SteamAppPriceOverviewModel
     public string? Currency { get; set; }
     
     [JsonPropertyName("initial")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public decimal? Initial { get; set; }
     
     [JsonPropertyName("final")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public decimal? Final { get; set; }
     
     [JsonPropertyName("discount_percent")]
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
     public int? DiscountPercentage { get; set; }
     
     [JsonPropertyName("initial_formatted")]
