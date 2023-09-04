@@ -16,8 +16,7 @@ public class SteamAppDetailDataModel
     public int? Id { get; set; }
 
     [JsonPropertyName("required_age")]
-    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-    public int? RequiredAge { get; set; }
+    public string? RequiredAge { get; set; }
 
     [JsonPropertyName("is_free")]
     public bool? IsFree { get; set; }
