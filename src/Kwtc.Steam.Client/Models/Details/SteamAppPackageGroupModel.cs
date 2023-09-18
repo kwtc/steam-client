@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Kwtc.Steam.Client.Converters;
 
 namespace Kwtc.Steam.Client.Models.Details;
 
@@ -21,8 +22,8 @@ public class SteamAppPackageGroupModel
     public string? SaveText { get; set; }
     
     [JsonPropertyName("display_type")]
-    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-    public int? DisplayType { get; set; }
+    [JsonConverter(typeof(NumberOrStringToStringConverter))]
+    public string? DisplayType { get; set; }
     
     [JsonPropertyName("is_recurring_subscription")]
     public string? IsRecurringSubscription { get; set; }
