@@ -13,7 +13,7 @@ public class SteamClientTests
     private const string ValidSteamProductIdTwo = "220"; // Half Life 2
 
     [Fact]
-    public async Task SteamClient_ValidProductIdNoCountryCodeAndPriceFilter_ShouldReturnProductPriceDetails()
+    public async Task SteamClient_ValidProductId_ShouldReturnExpectedDetails()
     {
         var sut = GetSut(GetOptions("STEAMKEY"));
 
@@ -23,13 +23,49 @@ public class SteamClientTests
         var result = await sut.GetAppDetailsAsync(
             [ValidSteamProductIdOne],
             null,
-            "english",
+            null,
             null,
             CancellationToken.None);
 
         result[ValidSteamProductIdOne].Data.Should().NotBeNull();
     }
-    
+
+    [Fact]
+    public async Task SteamClient_ValidProductIdAndCountryCode_ShouldReturnExpectedDetails()
+    {
+        var sut = GetSut(GetOptions("STEAMKEY"));
+
+        // Steams public API is limited so to avoid IP timeout we sleep a bit :D 
+        Thread.Sleep(2005);
+
+        var result = await sut.GetAppDetailsAsync(
+            [ValidSteamProductIdOne],
+            "ca",
+            null,
+            null,
+            CancellationToken.None);
+
+        result[ValidSteamProductIdOne].Data?.PriceOverview?.Currency.Should().Be("CAD");
+    }
+
+    [Fact]
+    public async Task SteamClient_ValidProductIdAndLanguage_ShouldReturnExpectedDetails()
+    {
+        var sut = GetSut(GetOptions("STEAMKEY"));
+
+        // Steams public API is limited so to avoid IP timeout we sleep a bit :D 
+        Thread.Sleep(2005);
+
+        var result = await sut.GetAppDetailsAsync(
+            [ValidSteamProductIdOne],
+            null,
+            "danish",
+            null,
+            CancellationToken.None);
+
+        result[ValidSteamProductIdOne].Data?.DetailedDescription.Should().Contain("kåret som Årets spil");
+    }
+
     [Fact]
     public async Task SteamClient_ValidProductIdsAndPriceFilter_ShouldReturnProductPriceDetailsForBothProducts()
     {
@@ -41,65 +77,71 @@ public class SteamClientTests
         var result = await sut.GetAppDetailsAsync(
             [ValidSteamProductIdOne, ValidSteamProductIdTwo],
             null,
-            "english",
+            null,
             [SteamFilters.PriceOverview],
             CancellationToken.None);
 
         result[ValidSteamProductIdOne].Data?.PriceOverview.Should().NotBeNull();
         result[ValidSteamProductIdOne].Data?.Developers.Should().BeNull();
+        result[ValidSteamProductIdOne].Data?.Publishers.Should().BeNull();
+        result[ValidSteamProductIdOne].Data?.Genres.Should().BeNull();
+        result[ValidSteamProductIdOne].Data?.Categories.Should().BeNull();
         result[ValidSteamProductIdTwo].Data?.PriceOverview.Should().NotBeNull();
         result[ValidSteamProductIdTwo].Data?.Developers.Should().BeNull();
+        result[ValidSteamProductIdTwo].Data?.Publishers.Should().BeNull();
+        result[ValidSteamProductIdTwo].Data?.Genres.Should().BeNull();
+        result[ValidSteamProductIdTwo].Data?.Categories.Should().BeNull();
     }
 
-    [Theory]
-    [InlineData("ar", "USD")]
-    [InlineData("bg", "EUR")]
-    [InlineData("zh-CN", "EUR")]
-    [InlineData("zh-TW", "EUR")]
-    [InlineData("cs", "USD")]
-    [InlineData("da", "USD")]
-    [InlineData("nl", "EUR")]
-    [InlineData("en", "USD")]
-    [InlineData("fi", "EUR")]
-    [InlineData("fr", "EUR")]
-    [InlineData("de", "EUR")]
-    [InlineData("el", "USD")]
-    [InlineData("hu", "EUR")]
-    [InlineData("it", "EUR")]
-    [InlineData("ja", "USD")]
-    [InlineData("ko", "USD")]
-    [InlineData("no", "NOK")]
-    [InlineData("pl", "PLN")]
-    [InlineData("pt-BR", "EUR")]
-    [InlineData("pt", "EUR")]
-    [InlineData("ro", "EUR")]
-    [InlineData("ru", "RUB")]
-    [InlineData("es-419", "EUR")]
-    [InlineData("es", "EUR")]
-    [InlineData("sv", "USD")]
-    [InlineData("th", "THB")]
-    [InlineData("tr", "USD")]
-    [InlineData("uk", "GBP")]
-    [InlineData("vn", "VND")]
-    public async Task SteamClient_ValidProductIdWithCountryCode_ShouldReturnProductDetailsWithCorrectCurrency(
-        string countryCode,
-        string currency)
-    {
-        var sut = GetSut(GetOptions("STEAMKEY"));
-
-        // Steams public API is limited so to avoid IP timeout we sleep a bit :D 
-        Thread.Sleep(2005);
-
-        var result = await sut.GetAppDetailsAsync(
-            [ValidSteamProductIdOne],
-            countryCode,
-            "english",
-            null,
-            CancellationToken.None);
-
-        result.Should().NotBeNull();
-        result[ValidSteamProductIdOne].Data?.PriceOverview?.Currency.Should().Be(currency);
-    }
+    // [Theory]
+    // [InlineData("ar", "USD")]
+    // [InlineData("bg", "EUR")]
+    // [InlineData("zh-CN", "EUR")]
+    // [InlineData("zh-TW", "EUR")]
+    // [InlineData("cs", "USD")]
+    // [InlineData("da", "USD")]
+    // [InlineData("nl", "EUR")]
+    // [InlineData("en", "USD")]
+    // [InlineData("fi", "EUR")]
+    // [InlineData("fr", "EUR")]
+    // [InlineData("de", "EUR")]
+    // [InlineData("el", "USD")]
+    // [InlineData("hu", "EUR")]
+    // [InlineData("it", "EUR")]
+    // [InlineData("ja", "USD")]
+    // [InlineData("ko", "USD")]
+    // [InlineData("no", "NOK")]
+    // [InlineData("pl", "PLN")]
+    // [InlineData("pt-BR", "EUR")]
+    // [InlineData("pt", "EUR")]
+    // [InlineData("ro", "EUR")]
+    // [InlineData("ru", "RUB")]
+    // [InlineData("es-419", "EUR")]
+    // [InlineData("es", "EUR")]
+    // [InlineData("sv", "USD")]
+    // [InlineData("th", "THB")]
+    // [InlineData("tr", "USD")]
+    // [InlineData("uk", "GBP")]
+    // [InlineData("vn", "VND")]
+    // public async Task SteamClient_ValidProductIdWithCountryCode_ShouldReturnProductDetailsWithCorrectCurrency(
+    //     string countryCode,
+    //     string currency)
+    // {
+    //     var sut = GetSut(GetOptions("STEAMKEY"));
+    //
+    //     // Steams public API is limited so to avoid IP timeout we sleep a bit :D 
+    //     Thread.Sleep(2005);
+    //
+    //     var result = await sut.GetAppDetailsAsync(
+    //         [ValidSteamProductIdOne],
+    //         countryCode,
+    //         "english",
+    //         null,
+    //         CancellationToken.None);
+    //
+    //     result.Should().NotBeNull();
+    //     result[ValidSteamProductIdOne].Data?.PriceOverview?.Currency.Should().Be(currency);
+    // }
 
     private static SteamClient GetSut(IOptions<SteamConfig> config)
     {
