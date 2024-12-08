@@ -7,7 +7,8 @@ namespace Kwtc.Steam.Client.Converters;
 
 public class SteamAppRequirementsConverter : JsonConverter<SteamAppRequirementsModel?>
 {
-    public override SteamAppRequirementsModel? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override SteamAppRequirementsModel? Read(ref Utf8JsonReader reader, Type typeToConvert,
+        JsonSerializerOptions options)
     {
         if (reader.TokenType == JsonTokenType.StartArray)
         {
@@ -19,12 +20,12 @@ public class SteamAppRequirementsConverter : JsonConverter<SteamAppRequirementsM
                 }
             }
         }
-        
+
         if (reader.TokenType == JsonTokenType.StartObject)
         {
             return JsonSerializer.Deserialize<SteamAppRequirementsModel>(ref reader, options);
         }
-        
+
         throw new ArgumentOutOfRangeException(nameof(reader));
     }
 
@@ -32,9 +33,10 @@ public class SteamAppRequirementsConverter : JsonConverter<SteamAppRequirementsM
     {
         if (value == null)
         {
+            writer.WriteNullValue();
             return;
         }
 
-        writer.WriteStringValue(JsonSerializer.Serialize(value));
+        JsonSerializer.Serialize(writer, value, options);
     }
 }
